@@ -1,0 +1,48 @@
+.containerInput {
+
+display: flex;
+flex-direction: column;
+background: transparent;
+
+& label {
+
+font-size: 12px;
+
+}
+
+& input {
+
+border: 1px solid #ddd;
+    border-radius: 8px;    
+padding: 10px;
+outline: none;
+    
+}
+
+& input:focus {
+
+border-color: var(--color-primary);
+
+}
+
+& input:disabled {
+
+cursor: not-allowed;
+background-color: rgb(185, 185, 185);
+
+}
+
+& span {
+
+color: var(--color-error);
+font-size: 12px;
+
+}
+
+& .inputError {
+
+border-color: var(--color-error);
+
+}
+
+}

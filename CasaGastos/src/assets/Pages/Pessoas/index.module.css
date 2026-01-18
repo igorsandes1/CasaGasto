@@ -1,0 +1,80 @@
+main {
+
+padding-left: calc(var(--pading-default-main) + 20px); /* 300px ( distancia da navbar ) + respiro (20px) */
+padding-top: 20px;
+
+}
+
+h1 {
+
+margin-bottom: 50px;
+
+}
+
+.containerSearch {
+
+display: flex;
+gap: 10px;
+
+& span {
+
+display: flex;
+gap: 5px;
+
+}
+    
+}
+
+.containerUsers {
+
+margin-top: 20px;
+
+& h2 {
+
+margin-bottom: 20px;
+
+}
+
+}
+
+.boxUsers {
+
+display: flex;
+gap: 20px;
+flex-direction: column;
+
+}
+
+.containerUser {
+
+background-color: #f2f2f2f2;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.275);
+margin-right: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+& .containerUserInfo {
+
+display: flex;
+flex-direction: column;
+gap: 5px;
+
+& span {
+
+color: #888;
+
+}
+
+}
+
+& .containerButtons {
+
+display: flex;
+gap: 10px;
+
+}
+
+}

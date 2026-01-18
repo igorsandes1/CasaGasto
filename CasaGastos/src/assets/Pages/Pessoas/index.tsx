@@ -12,16 +12,24 @@ function PessoasComponent() {
 const date = new Date()
 const todayFormatted = date.getFullYear()+'-'+date.getMonth()+1+"-"+date.getDate() // pega a data de hoje para limitar no type date
 
-const [search, setSearch] = useState('')
-const [modalEditPerson, setModalEditPerson] = useState(false)
-const [personSelectedEdit, setPersonSelectedEdit] = useState<Pessoa | null>(null)
+const [search, setSearch] = useState('') //é o valor/edicao do campo de busca
+const [modalEditPerson, setModalEditPerson] = useState(false) //ativa/desativa modal de edicao de pessoas
+const [personSelectedEdit, setPersonSelectedEdit] = useState<Pessoa | null>(null) //e o array da pessoa que foi selecionada para a edicao
 const [modalCreatePerson, setModalCreatePerson] = useState(false) //ativa/desativa modal de criacao de pessoas
 const [personName, setPersonName] = useState('') //nome da pessoa inserido pelo usuario no modal de criacao de pessoas
 const [dateBirthday, setDateBirthday] = useState('') //data de aniversario inserida pelo usuario no modal de criacao de pessoas
 const [errorPersonName, setErrorPersonName] = useState('') //caso ocorra algum erro, setar/aparecer a mensagem para o usuario no modal de criacao de pessoas
 const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro, setar/aparecer a mensagem para o usuario no modal de criacao de pessoas
 
-  let pessoas: Pessoa[] = []
+  let pessoas: Pessoa[] = [
+
+  {
+    id: 'asdasda',
+    username: 'Igor',
+    birthday: '2004-04-29',
+  }
+
+  ]
 
   function editPerson(): boolean {
 
@@ -105,7 +113,7 @@ yearsOld = yearsOld - 1
     <NavbarComponent />
     
     <main>
-    <h1>Pessoas</h1>
+    <h1>Gerenciar Pessoas</h1>
     <div className={styles.containerSearch}>
     <span>
     <img src={Search} alt="Search image" />

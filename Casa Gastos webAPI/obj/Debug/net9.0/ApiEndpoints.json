@@ -1,0 +1,96 @@
+[
+  {
+    "ContainingType": "Casa_Gastos_webAPI.Controllers.CategoriasController",
+    "Method": "Get",
+    "RelativePath": "api/categorias",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Casa_Gastos_webAPI.Controllers.CategoriasController",
+    "Method": "Post",
+    "RelativePath": "api/categorias",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Casa_Gastos_webAPI.DTOs.CreateCategoryDb",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Casa_Gastos_webAPI.Controllers.PessoasController",
+    "Method": "Get",
+    "RelativePath": "api/pessoas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Casa_Gastos_webAPI.Controllers.PessoasController",
+    "Method": "Post",
+    "RelativePath": "api/pessoas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Casa_Gastos_webAPI.DTOs.CreatePessoaDb",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Casa_Gastos_webAPI.Controllers.PessoasController",
+    "Method": "Delete",
+    "RelativePath": "api/pessoas",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Casa_Gastos_webAPI.DTOs.DeletePessoaDb",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Casa_Gastos_webAPI.Controllers.TransacoesController",
+    "Method": "Get",
+    "RelativePath": "api/transacoes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Casa_Gastos_webAPI.Controllers.TransacoesController",
+    "Method": "Post",
+    "RelativePath": "api/transacoes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Casa_Gastos_webAPI.DTOs.CreateTransacaoDb",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

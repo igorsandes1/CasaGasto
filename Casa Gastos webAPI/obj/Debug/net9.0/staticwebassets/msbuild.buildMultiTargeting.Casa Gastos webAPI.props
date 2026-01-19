@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Casa Gastos webAPI.props" />
+</Project>

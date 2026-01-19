@@ -15,9 +15,9 @@ const [path, setPath] = useState('')
 
  useEffect(() => {
 
-setPath(location.pathname.toLowerCase())
+  setPath(location.pathname.toLowerCase()) // verifica a url que estamos.
 
- }) 
+ }, []) 
 
   return (
     <nav>
@@ -27,7 +27,7 @@ setPath(location.pathname.toLowerCase())
     </div>
 
     <ul className={styles.containerItems}>
-    <li className={ path == '/pessoas' ? styles.itemSelected : ''}><a href='/pessoas'><img src={User} alt="User imagem"/> <span>Pessoas</span></a></li>
+    <li className={ path != '/categorias' && '/transacoes' && '/relatorios' ? styles.itemSelected : ''}><a href='/pessoas'><img src={User} alt="User imagem"/> <span>Pessoas</span></a></li>
     <li className={ path == '/categorias' ? styles.itemSelected : ''}><a href='/categorias'><img src={Category} alt="Category imagem" /> <span>Categorias</span></a></li>
     <li className={ path == '/transacoes' ? styles.itemSelected : ''}><a href='/transacoes'><img src={Card} alt="Card imagem" /> <span>Transações</span></a></li>
     <li className={ path == '/relatorios' ? styles.itemSelected : ''}><a href='/relatorios'><img src={Chart} alt="Chart imagem" /> <span>Relatórios</span></a></li>

@@ -3,12 +3,15 @@ import styles from './index.module.css'
 import Search from '../../imgs/Search_alt.svg'
 import InputComponent from '../../Components/Input'
 import ButtonComponent from '../../Components/Button'
-import type { Categorias } from '../../../interfaces/categorias'
+import type { Categorias } from '../../../interfaces/Categorias'
 import React, { useState } from 'react'
+import ModalComponent from '../../Components/Modal'
+import SelectComponent from '../../Components/Select'
 
 function CategoriasComponent() {
 
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('') //valor da barra de pesquisa de categoria
+  const [modalCreateCategory, setModalCreateCategory] = useState(false) //ativa/desativa modal de criacao de categorias
 
   let categorias = [
 
@@ -25,6 +28,21 @@ function CategoriasComponent() {
 
   ]
 
+  let selectItems = [
+    {
+      id: '1',
+      name: 'Despesa'
+    },
+    {
+      id: '2',
+      name: 'Receita'
+    },
+    {
+      id: '3',
+      name: 'Ambas'
+    },
+  ]
+
   return (
   <>
   
@@ -36,7 +54,7 @@ function CategoriasComponent() {
     <img src={Search} alt="Search image" />
     <InputComponent placeholder='Pesquisar uma categoria' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}/>
     </span>
-    <ButtonComponent label='+ Criar nova categoria'/>
+    <ButtonComponent label='+ Criar nova categoria' onClick={() => setModalCreateCategory(true)}/>
     </div>
     <div className={styles.containerCategorys}>
     <h2>Listagem de categorias:</h2>
@@ -61,6 +79,18 @@ function CategoriasComponent() {
 
     </div>
     </div>
+
+    {
+
+    modalCreateCategory &&
+    <ModalComponent onClose={() => setModalCreateCategory(false)}>
+    <InputComponent label='Descrição' id='oi'/>
+    <SelectComponent label='Finalidade' optionsArray={selectItems} />
+    <ButtonComponent label='Criar Categoria'/>
+    </ModalComponent>
+
+    }
+
     </main>
 
   </>

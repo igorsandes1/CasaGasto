@@ -1,0 +1,53 @@
+.containerCreateTransaction {
+
+background-color: #f2f2f2;
+padding: 20px;
+margin-right: 20px;
+border-radius: 10px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+
+& .boxCreateTransaction {
+
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+
+}
+
+}
+
+.alarmYearsOld {
+
+color: var(--color-alarm);
+display: flex;
+align-items: center;
+gap: 5px;
+font-size: 12px;
+
+& img {
+
+width: 16px;
+
+}
+
+}
+
+.containerItemListTransactions {
+
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+background-color: #f2f2f2;
+padding: 10px;
+border-radius: 10px;
+margin-right: 20px;
+gap: 5px;
+
+& span {
+
+font-weight: 600;
+
+}
+
+}

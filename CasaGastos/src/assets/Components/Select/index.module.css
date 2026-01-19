@@ -1,0 +1,22 @@
+.containerSelect {
+
+display: flex;
+flex-direction: column;
+
+}
+
+label {
+
+font-size: 12px;
+z-index: 9999;
+
+}
+
+select {
+
+border: 1px solid #ddd;
+border-radius: 8px;    
+padding: 10px;
+outline: none;
+    
+}

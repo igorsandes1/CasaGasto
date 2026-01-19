@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { Pessoa } from '../../../interfaces/pessoas'
+import type { Pessoa } from '../../../interfaces/Pessoas'
 import ButtonComponent from '../../Components/Button'
 import InputComponent from '../../Components/Input'
 import NavbarComponent from '../../Components/Navbar'
@@ -41,8 +41,12 @@ const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro,
 
   function createNewPerson(): boolean {
 
+  //reset de errors
+
   setErrorBirthday('')
   setErrorPersonName('')
+
+  //check de data de nascimento, para ver se está no range de hoje e acima do ano de 1900.
 
   const dateBirthdayCheck = new Date(dateBirthday)
 
@@ -52,11 +56,15 @@ const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro,
 
   }
 
+  //check se o nome não está vázio
+
   if(!personName) {
 
   setErrorPersonName('A pessoa a ser criada necessita de um nome')
 
   }
+
+  //check se data de nascimento não está vazia
 
   if(!dateBirthday) {
 
@@ -67,6 +75,8 @@ const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro,
   return true
 
   }
+
+  //calc para trazer o valor inteiro de idade da pessoa
 
   function calcYearsOld(dateBirth: string): number {
 
@@ -157,6 +167,9 @@ yearsOld = yearsOld - 1
     </div>
 
   {
+
+    //caso modalCreatePerson for true, abre o modal para criar uma nova pessoa
+
    modalCreatePerson && 
   <ModalComponent onClose={() => setModalCreatePerson(false)}>
   <h2>Criar nova pessoa</h2>
@@ -166,6 +179,9 @@ yearsOld = yearsOld - 1
   </ModalComponent>
   }
   {
+  
+  //caso o modalEditPerson for true, abre o modal para editar pessoa selecionada (a pessoa vem do obj personSelectedEdit)
+
   modalEditPerson && personSelectedEdit &&
   <ModalComponent onClose={() => setModalEditPerson(false)}>
   <h2>Edição de pessoa</h2>

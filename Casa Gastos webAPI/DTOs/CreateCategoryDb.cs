@@ -4,11 +4,9 @@ namespace Casa_Gastos_webAPI.DTOs
 {
     public class CreateCategoryDb
     {
-        [Required(ErrorMessage = "Descrição é obrigatória")]
-        [MinLength(1, ErrorMessage = "Descrição precisa ter ao menos 1 caractér")]
+        [Required(ErrorMessage = "Descrição é obrigatória")] //Deixando a descricao como obrigatória
         public string Description { get; set; }
-        [Required(ErrorMessage = "Finalidade é obrigatória")]
-        [MinLength(1, ErrorMessage = "Finalidade precisa ter ao menos 1 caractér")]
+        [Required(ErrorMessage = "Finalidade é obrigatória")] //Deixando a finalidade como obrigatória
         public string Target { get; set; }
     }
 }

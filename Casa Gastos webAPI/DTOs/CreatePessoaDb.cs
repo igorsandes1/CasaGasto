@@ -4,10 +4,9 @@ namespace Casa_Gastos_webAPI.DTOs
 {
     public class CreatePessoaDb
     {
-        [Required(ErrorMessage = "Nome obrigatório")]
+        [Required(ErrorMessage = "Nome obrigatório")] //Deixando o nome como obrigatório
         public string Name { get; set; }
-        [Required(ErrorMessage = "Data de nascimento obrigatório")]
-        [MinLength(10, ErrorMessage = "Quantidade de caractéres da data de nascimento inválidos")]
-        public string DateBirth { get; set; }
+        [Required(ErrorMessage = "Data de nascimento obrigatório")] //Deixando a data de nascimento como obrigatória
+        public DateOnly DateBirth { get; set; }
     }
 }

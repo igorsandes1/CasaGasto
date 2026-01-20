@@ -4,20 +4,16 @@ namespace Casa_Gastos_webAPI.DTOs
 {
     public class CreateTransacaoDb
     {
-        [Required(ErrorMessage = "Descricao é obrigatória")]
-        [MinLength(1, ErrorMessage = "Descricao está vázia")]
+        [Required(ErrorMessage = "Descricao é obrigatória")] //Deixando a descricao como obrigatória
         public string Description { get; set; }
-        [Required(ErrorMessage = "Valor é obrigatório")]
+        [Required(ErrorMessage = "Valor é obrigatório")] //Deixando o valor como obrigatório
         [Range(0.01, double.MaxValue, ErrorMessage = "O valor deve ser maior que zero")] // definindo o range do decimal (de 0.01 até o valor máximo do double)
         public decimal Value { get; set; }
-        [Required(ErrorMessage = "Finalidade é obrigatória")]
-        [MinLength(1, ErrorMessage = "Finalidade está vázia")]
+        [Required(ErrorMessage = "Finalidade é obrigatória")] //Deixando a finalidade como obrigatória
         public string Target { get; set; }
-        [Required(ErrorMessage = "Categoria é obrigatória")]
-        [MinLength(1, ErrorMessage = "Categoria está vázia")]
-        public string Category { get; set; }
-        [Required(ErrorMessage = "Pessoa é obrigatória")]
-        [MinLength(1, ErrorMessage = "Pessoa está vázia")]
-        public string Owner { get; set; }
+        [Required(ErrorMessage = "Categoria é obrigatória")] //Deixando a categoria como obrigatória
+        public Guid Category { get; set; }
+        [Required(ErrorMessage = "Pessoa é obrigatória")] //Deixando a pessoa como obrigatório
+        public Guid Owner { get; set; }
     }
 }

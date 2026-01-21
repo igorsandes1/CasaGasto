@@ -1,24 +1,28 @@
+import type { ComponentProps } from 'react'
 import type { Select } from '../../../interfaces/Select'
 import styles from './index.module.css'
 
-interface SelectProps {
+type SelectProps = ComponentProps<'select'> & {
 
+error: string
+identificador?: string
 label: string,
 optionsArray: Select[]
     
 }
 
-function SelectComponent({label, optionsArray,}: SelectProps) {
+function SelectComponent({error, identificador, label, optionsArray, ...props}: SelectProps) {
   return (
 <div className={styles.containerSelect}>
 
     <label>{label}</label>
-    <select>
+    <select className={error && styles.selectError} {...props}>
+    <option value="default">Selecione um item</option>
     {optionsArray.map((optionArr) => (
-        <option key={optionArr.id} value={optionArr.id}>{optionArr.name}</option>
+        <option key={optionArr.id} value={optionArr.id}>{identificador ? optionArr[identificador] : optionArr.name}</option>
     ))}
     </select>
-
+{error && <span className={styles.containerError}>{error}</span>}
 </div>
   )
 }

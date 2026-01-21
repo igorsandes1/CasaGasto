@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { Pessoa } from '../../../interfaces/Pessoas'
 import ButtonComponent from '../../Components/Button'
 import InputComponent from '../../Components/Input'
@@ -20,16 +20,63 @@ const [personName, setPersonName] = useState('') //nome da pessoa inserido pelo 
 const [dateBirthday, setDateBirthday] = useState('') //data de aniversario inserida pelo usuario no modal de criacao de pessoas
 const [errorPersonName, setErrorPersonName] = useState('') //caso ocorra algum erro, setar/aparecer a mensagem para o usuario no modal de criacao de pessoas
 const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro, setar/aparecer a mensagem para o usuario no modal de criacao de pessoas
+const [pessoas, setPessoas] = useState([])
 
-  let pessoas: Pessoa[] = [
+  //busca na api de pessoas ( GET )
+  const loadPessoas = async() => {
 
-  {
-    id: 'asdasda',
-    username: 'Igor',
-    birthday: '2004-04-29',
+  fetch("https://localhost:7223/api/pessoas", {
+    method: "GET"
+  })
+  .then((response) => {
+
+  if(!response.ok) {
+
+  throw new Error("Houve um erro ao buscar os dados") //Caso ocorra um erro, ele da esse retorno
+
   }
 
-  ]
+  return response.json()
+
+  }).then((data) => {
+
+  setPessoas(data) //setando na variavél o retorno da api
+
+  })
+
+  }
+
+  //Carrega a api ao entrar na pagina
+  useEffect(() => {
+
+  loadPessoas()
+
+  }, [])
+
+  // funcao para deletar o usuário
+  function deletePerson(pessoa: Pessoa): boolean {
+
+  //exclusao de pessoas ( DELETE )
+  fetch("https://localhost:7223/api/pessoas/delete", {
+    "method": "DELETE",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": JSON.stringify({
+      Id: pessoa.id
+    })
+  }).then((response) => {
+  if(!response.ok) {
+  throw new Error("Não é possível deletar este usuário") //Caso ocorra um erro, ele da esse retorno
+  }
+
+  loadPessoas()
+
+  })
+
+  return true
+
+  }
 
   function editPerson(): boolean {
 
@@ -49,6 +96,8 @@ const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro,
   //check de data de nascimento, para ver se está no range de hoje e acima do ano de 1900.
 
   const dateBirthdayCheck = new Date(dateBirthday)
+
+  if(dateBirthdayCheck > date || dateBirthday < "1900-01-01" || !personName || !dateBirthday) {
 
   if(dateBirthdayCheck > date || dateBirthday < "1900-01-01") {
 
@@ -72,6 +121,29 @@ const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro,
 
   }
 
+  }
+
+  //criacao de pessoas ( POST )
+   fetch("https://localhost:7223/api/pessoas/create", {
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": JSON.stringify({
+     Name: personName,
+     DateBirth: dateBirthday 
+    })
+  }).then((response) => {
+
+  if(!response.ok) {
+    throw new Error("Não foi possível criar o usuário") //Caso ocorra um erro, ele da esse retorno
+  }
+
+  loadPessoas() //recarrega a funcao de GET em pessoas
+  setModalCreatePerson(false) //fecha o modal de criacao de pessoa
+
+  })
+
   return true
 
   }
@@ -91,8 +163,6 @@ const [errorBirthday, setErrorBirthday] = useState('') //caso ocorra algum erro,
   let dayUser = dateBirthString.getDate()
   
 let yearsOld = year - yearUser
-
-console.log(month, monthUser)
 
 if(month < monthUser) {
 
@@ -138,16 +208,16 @@ yearsOld = yearsOld - 1
     {
 
     pessoas
-    .filter((pessoa: Pessoa) => pessoa.username.toLowerCase().includes(search.toLowerCase())) // Filtrar pelo username caso o search tenha valor
+    .filter((pessoa: Pessoa) => pessoa.name.toLowerCase().includes(search.toLowerCase())) // Filtrar pelo username caso o search tenha valor
     .map((pessoa: Pessoa) => { //Listando todos os usuários que possuem no array de pessoas.
     return (
     
    <div key={pessoa.id} className={styles.containerUser}>
    <div className={styles.containerUserInfo}>
-    <h3>{pessoa.username}</h3>
+    <h3>{pessoa.name}</h3>
     <span>
     ID: #{pessoa.id} <br />
-    IDADE: {calcYearsOld(pessoa.birthday)} anos
+    IDADE: {calcYearsOld(pessoa.dateBirth)} anos
     </span>
    </div>
    <div className={styles.containerButtons}>
@@ -155,7 +225,7 @@ yearsOld = yearsOld - 1
     setModalEditPerson(true)
     setPersonSelectedEdit(pessoa)
    }}/>
-   <ButtonComponent label='Excluir' color='rgb(151, 21, 21)'/>
+   <ButtonComponent label='Excluir' color='rgb(151, 21, 21)' onClick={() => deletePerson(pessoa)}/>
    </div>
    </div>
     
@@ -185,8 +255,8 @@ yearsOld = yearsOld - 1
   modalEditPerson && personSelectedEdit &&
   <ModalComponent onClose={() => setModalEditPerson(false)}>
   <h2>Edição de pessoa</h2>
-  <InputComponent label='Nome' value={personSelectedEdit.username} error={errorPersonName}/>
-  <InputComponent type='date' label='Data de nascimento' value={personSelectedEdit.birthday} min='1900-01-01' max={todayFormatted && todayFormatted} error={errorBirthday} disabled/>
+  <InputComponent label='Nome' value={personSelectedEdit.name} error={errorPersonName}/>
+  <InputComponent type='date' label='Data de nascimento' value={personSelectedEdit.dateBirth} min='1900-01-01' max={todayFormatted && todayFormatted} error={errorBirthday} disabled/>
   <ButtonComponent label='Editar pessoa' />
   </ModalComponent>
   }

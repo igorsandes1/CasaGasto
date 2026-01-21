@@ -23,10 +23,16 @@ namespace Casa_Gastos_webAPI.Controllers
 
         //GET api/categorias (Faz um select em toda a base de pessoas)
         [HttpGet]
-        public async Task<IActionResult> Get() {
+        public async Task<IActionResult> Get([FromQuery] string? finalidade) { //utlizando query string, para passar o valor da finalidade caso seja especifica
 
-            var listaCategorias = await _context.categorias.ToListAsync();
-            return Ok(listaCategorias); //retorno 200
+            if (finalidade == "Ambas")
+            { //filtrando todas as categorias (caso finalidade seja Ambas)
+                var todasCategorias = await _context.categorias.ToListAsync();
+                return Ok(todasCategorias); //retorno 200
+            }
+            //filtrando a categoria desejado pelo query string
+            var filtroCategorias = await _context.categorias.Where(b => b.Target == finalidade).ToListAsync();
+            return Ok(filtroCategorias); //retorno 200
 
         }
 

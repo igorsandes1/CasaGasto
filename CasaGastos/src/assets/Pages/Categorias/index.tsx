@@ -4,7 +4,7 @@ import Search from '../../imgs/Search_alt.svg'
 import InputComponent from '../../Components/Input'
 import ButtonComponent from '../../Components/Button'
 import type { Categorias } from '../../../interfaces/Categorias'
-import React, { useState } from 'react'
+import React, { useEffect, useState, type ChangeEvent } from 'react'
 import ModalComponent from '../../Components/Modal'
 import SelectComponent from '../../Components/Select'
 
@@ -13,32 +13,103 @@ function CategoriasComponent() {
   const [search, setSearch] = useState('') //valor da barra de pesquisa de categoria
   const [modalCreateCategory, setModalCreateCategory] = useState(false) //ativa/desativa modal de criacao de categorias
 
-  let categorias = [
+  const [description, setDescription] = useState('')
+  const [target, setTarget] = useState('')
+  const [categorias, setCategorias] = useState([])
 
-  {
-    id: '123123123',
-    description: 'pagar carro',
-    target: 'despesa'
-  },
-  {
-    id: '12312',
-    description: 'salário',
-    target: 'receita'
+  const [errorDescription, setErrorDescription] = useState('')
+  const [errorTarget, setErrorTarget] = useState('')
+
+  const loadCategorias = async () => {
+
+  fetch(`https://localhost:7223/api/categorias?finalidade=Ambas`, {
+
+  method: "GET"
+
+  })
+  .then((response) => {
+
+  if(!response.ok) {
+
+  throw new Error("Houve um erro ao buscar os dados")
+
   }
 
-  ]
+  return response.json()
+
+  }).then((data) => {
+
+  setCategorias(data)
+
+  })
+    
+  }
+
+  useEffect(() => {
+
+    loadCategorias()
+
+  }, [])
+
+  function createCategory(): boolean {
+
+  setErrorDescription('')
+  setErrorTarget('')
+
+  if(target == 'default' || !description) {
+
+  if(target == 'default') {
+
+  setErrorTarget("O campo finalidade é obrigatório")
+
+  }
+
+  if(!description) {
+
+  setErrorDescription("O campo descrição é obrigatório")
+
+  }
+
+  return false
+
+  }
+
+  fetch(`https://localhost:7223/api/categorias/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      Description: description,
+      Target: target
+    })
+  }).then((response) => {
+  if(!response.ok) {
+    
+    throw new Error("Houve um erro ao buscar os dados")
+
+  }
+
+  loadCategorias()
+  setModalCreateCategory(false)
+
+  })
+
+  return true
+
+  }
 
   let selectItems = [
     {
-      id: '1',
+      id: 'Despesa',
       name: 'Despesa'
     },
     {
-      id: '2',
+      id: 'Receita',
       name: 'Receita'
     },
     {
-      id: '3',
+      id: 'Ambas',
       name: 'Ambas'
     },
   ]
@@ -84,9 +155,17 @@ function CategoriasComponent() {
 
     modalCreateCategory &&
     <ModalComponent onClose={() => setModalCreateCategory(false)}>
-    <InputComponent label='Descrição' id='oi'/>
-    <SelectComponent label='Finalidade' optionsArray={selectItems} />
-    <ButtonComponent label='Criar Categoria'/>
+    <InputComponent label='Descrição' error={errorDescription} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      setDescription(value)
+      description != '' && setErrorDescription('')
+    }}/>
+    <SelectComponent label='Finalidade' optionsArray={selectItems} error={errorTarget} onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+      const value = e.target.value
+      setTarget(value)
+      target != 'default' && setErrorTarget('')
+    }}/>
+    <ButtonComponent label='Criar Categoria' onClick={() => createCategory()}/>
     </ModalComponent>
 
     }

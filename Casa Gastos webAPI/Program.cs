@@ -16,6 +16,12 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+//Configuracao o cors
+
+app.UseCors(policy => 
+policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

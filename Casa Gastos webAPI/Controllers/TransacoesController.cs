@@ -24,9 +24,31 @@ namespace Casa_Gastos_webAPI.Controllers
         public async Task<IActionResult> Get() 
         {
 
+        var resultadoListaTransacoes = new List<GetTransacoes>();
         var listaTransacoes = await _context.transacoes.ToListAsync();
 
-        return Ok(listaTransacoes); //retorno 200
+        foreach(var transacoes in listaTransacoes) {
+
+        var categorias = await _context.categorias.FindAsync(transacoes.Category);
+        var pessoas = await _context.pessoas.FindAsync(transacoes.Owner);
+
+                var itemArray = new GetTransacoes
+                {
+
+                    Id = transacoes.Id,
+                    Category = categorias.Description,
+                    Description = transacoes.Description,
+                    Owner = pessoas.Name,
+                    Target = transacoes.Target,
+                    Value = transacoes.Value,
+                    Created_At = transacoes.Created_At
+                };
+
+                resultadoListaTransacoes.Add(itemArray);
+
+        }
+
+        return Ok(resultadoListaTransacoes); //retorno 200
 
         }
 
@@ -52,7 +74,7 @@ namespace Casa_Gastos_webAPI.Controllers
 
             if (checkYearsPessoa) { 
             
-                if(dto.Target.ToLower() == "despesa" || dto.Target.ToLower() == "ambas")
+                if(dto.Target.ToLower() != "despesa")
                 {
                     return BadRequest("O usuário possui menos de 18 anos para ter despesas"); //garantir que menores de 18, tenham somente a "Despesa" como target (finalidade)
                 }

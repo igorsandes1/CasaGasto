@@ -54,6 +54,10 @@ const [pessoas, setPessoas] = useState([])
   // funcao para deletar o usuário
   function deletePerson(pessoa: Pessoa): boolean {
 
+  let confirmDel = confirm("Voce realmente deseja excluir: " + pessoa.name)
+
+  if(confirmDel) {
+
   //exclusao de pessoas ( DELETE )
   fetch("https://localhost:7223/api/pessoas/delete", {
     "method": "DELETE",
@@ -71,6 +75,8 @@ const [pessoas, setPessoas] = useState([])
   loadPessoas()
 
   })
+
+  }
 
   return true
 

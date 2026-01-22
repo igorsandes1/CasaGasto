@@ -2,6 +2,8 @@
 {
     public class PessoaResponseDb
     {
+
+        //Response para inserirmos o yearsOld.
         public Guid Id { get; set; }
         public string Name { get; set; }
         public DateOnly DateBirth { get; set; }

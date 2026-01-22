@@ -26,7 +26,6 @@ C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\
 C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.Casa Gastos webAPI.props
 C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.Casa Gastos webAPI.props
 C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\Casa Gas.76A3B6A7.Up2Date
 C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\Casa Gastos webAPI.dll
 C:\Users\igorl\Área de Trabalho\CasaGastos\Casa Gastos webAPI\obj\Debug\net9.0\refint\Casa Gastos webAPI.dll

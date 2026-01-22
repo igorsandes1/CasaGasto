@@ -2,6 +2,7 @@ import type { ComponentProps } from 'react'
 import type { Select } from '../../../interfaces/Select'
 import styles from './index.module.css'
 
+//tipando todas as propriedades que o select irá receber.
 type SelectProps = ComponentProps<'select'> & {
 
 error: string

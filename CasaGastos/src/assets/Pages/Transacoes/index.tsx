@@ -12,23 +12,25 @@ import type { Categorias } from '../../../interfaces/Categorias'
 
 function TransacoesComponent() {
 
-  const [targetSelected, setTargetSelected] = useState<Select[]>([])
-  const [pessoasDados, setPessoasDados] = useState<Pessoa[]>([]);
-  const [transacoesDados, setTransacoesDados] = useState([]);
-  const [categoriasDados, setCategoriasDados] = useState<Categorias[]>([])
+  const [targetSelected, setTargetSelected] = useState<Select[]>([]) //array de escolha de finalidade para SELECT
+  const [pessoasDados, setPessoasDados] = useState<Pessoa[]>([]);  //array de escolha de pessoas para SELECT
+  const [categoriasDados, setCategoriasDados] = useState<Categorias[]>([]) //array de escolha de categorias para SELECT
 
-  const [description, setDescription] = useState('')
-  const [value, setValue] = useState(0)
-  const [target, setTarget] = useState('default')
-  const [category, setCategory] = useState('default')
-  const [personName, setPersonName] = useState('default')
+  const [transacoesDados, setTransacoesDados] = useState([]); //todas as transacoes realizadas
 
-  const [errorDescription, setErrorDescription] = useState('')
-  const [errorValue, setErrorValue] = useState('')
-  const [errorTarget, setErrorTarget] = useState('')
-  const [errorCategory, setErrorCategory] = useState('')
-  const [errorPersonName, setErrorPersonName] = useState('')
+  const [description, setDescription] = useState('') //descricao inserida pelo usuario
+  const [value, setValue] = useState(0) //valor inserido pelo usuario
+  const [target, setTarget] = useState('default') //finalidade inserido pelo usuario
+  const [category, setCategory] = useState('default') //categoria inserida pelo usuario
+  const [personName, setPersonName] = useState('default') //pessoa inserida pelo usuario
 
+  const [errorDescription, setErrorDescription] = useState('') //mensagem de erro dos inputs de descricao
+  const [errorValue, setErrorValue] = useState('') //mensagem de erro dos inputs de valor
+  const [errorTarget, setErrorTarget] = useState('') //mensagem de erro dos inputs de finalidade
+  const [errorCategory, setErrorCategory] = useState('') //mensagem de erro dos inputs de categoria
+  const [errorPersonName, setErrorPersonName] = useState('') //mensagem de erro dos inputs de pessoa
+
+  //funcao para get no endpoint de pessoas
   const loadPessoas = async() => {
 
   fetch("https://localhost:7223/api/pessoas", {
@@ -38,7 +40,7 @@ function TransacoesComponent() {
 
   if(!response.ok) {
 
-  throw new Error("Houve um erro ao buscar os dados")
+  throw new Error("Houve um erro ao buscar os dados") //caso retorne algum erro para buscar o dado
 
   }
 
@@ -52,6 +54,7 @@ function TransacoesComponent() {
 
   }
 
+    //funcao para get no endpoint de categorias
   const loadCategorias = async (finalidade?: string) => {
 
   fetch(`https://localhost:7223/api/categorias?finalidade=${finalidade}`, {
@@ -63,7 +66,7 @@ function TransacoesComponent() {
 
   if(!response.ok) {
 
-  throw new Error("Houve um erro ao buscar os dados")
+  throw new Error("Houve um erro ao buscar os dados") //caso retorne algum erro para buscar o dado
 
   }
 
@@ -77,6 +80,7 @@ function TransacoesComponent() {
     
   }
 
+    //funcao para get no endpoint de transacoes
   const loadTransacoes = async () => {
 
   fetch("https://localhost:7223/api/transacoes", {
@@ -86,7 +90,7 @@ function TransacoesComponent() {
 
   if(!response.ok) {
 
-  throw new Error("Houve um erro ao buscar os dados")
+  throw new Error("Houve um erro ao buscar os dados") //caso retorne algum erro para buscar o dado
 
   }
 
@@ -100,14 +104,17 @@ function TransacoesComponent() {
 
   }
 
+  //funcao para criacao de uma nova transacao
   function createTransaction(): boolean {
 
+    //reset de erros
   setErrorDescription('')
   setErrorValue('')
   setErrorTarget('')
   setErrorCategory('')
   setErrorPersonName('')
 
+  //filtragem dos erros
   if(!description || value <= 0 || target == 'default' || category == 'default' || personName == "default") {
 
   if(!description) {
@@ -163,7 +170,7 @@ function TransacoesComponent() {
 
   if(!response.ok) {
 
-  throw new Error("Houve um erro ao postar esse item em categorias.")
+  throw new Error("Houve um erro ao postar esse item em categorias.")  //caso retorne algum erro para buscar o dado
 
   }
 
@@ -176,6 +183,7 @@ function TransacoesComponent() {
 
   useEffect(() => {
 
+    //busca dos dados de categorias, pessoas e transacoes
   loadCategorias()
   loadPessoas()
   loadTransacoes()
@@ -184,6 +192,7 @@ function TransacoesComponent() {
 
   useEffect(() => {
   
+  //filtro para menores de 18 não preencherem o campo de receita
   let personSelected = pessoasDados.find((b: Pessoa) => b.id == personName) 
   
   if(personSelected && personSelected.yearsOld < 18) {

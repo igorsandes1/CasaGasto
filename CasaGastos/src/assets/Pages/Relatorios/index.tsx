@@ -5,14 +5,16 @@ import type { RelatorioPessoasIndividual } from '../../../interfaces/RelatorioPe
 
 function RelatoriosComponent() {
 
-  const [ValuesGeral, setValuesGeral] = useState({
+  //valores gerais tanto de pessoas quanto de categorias
+  const [ValuesGeral, setValuesGeral] = useState({ 
   totalReceitas: 0,
   totalDespesa: 0,
   totalSaldo: 0
   })
-  const [ValuesIndividual, setValuesIndividual] = useState([])
-  const [filterSelected, setFilterSelected] = useState("pessoas")
+  const [ValuesIndividual, setValuesIndividual] = useState([]) //valores individuais de pessoas e categorias
+  const [filterSelected, setFilterSelected] = useState("pessoas") //filtro para verificar qual está selecionado (pessoa x categoria)
 
+  //funcao para requisitar o endpoint de números de pessoas
   const loadPessoasTotais = () => {
 
   fetch("https://localhost:7223/api/pessoas/totais", {
@@ -30,14 +32,14 @@ function RelatoriosComponent() {
 
   }).then((data) => {
 
-  setValuesGeral(data.geral) //setando na variavél o retorno da api
-  setValuesIndividual(data.individual)
-  console.log(data.individual)
+  setValuesGeral(data.geral) // setando na var geral
+  setValuesIndividual(data.individual) //setando na var individual
 
   })
 
   }
 
+  //funcao para requisitar o endpoint de números de categorias
   const loadCategoriasTotais = () => {
 
     fetch("https://localhost:7223/api/categorias/totais", {
@@ -55,9 +57,8 @@ function RelatoriosComponent() {
 
   }).then((data) => {
 
-  setValuesGeral(data.geral) //setando na variavél o retorno da api
-  setValuesIndividual(data.individual)
-  console.log(data.individual)
+  setValuesGeral(data.geral) //setando na var geral
+  setValuesIndividual(data.individual)//setando na var individual
 
   })
 
@@ -65,7 +66,7 @@ function RelatoriosComponent() {
 
   useEffect(() => {
 
-  loadPessoasTotais()
+  loadPessoasTotais() //carregando os números defaults (pessoas)
 
   }, [])
 

@@ -25,9 +25,9 @@ namespace Casa_Gastos_webAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get() 
         {
-            var arrayPessoas = new List<PessoaResponseDb>();
-            var date = DateOnly.FromDateTime(DateTime.Now);
-            var listaPessoas = await _context.pessoas.ToListAsync();
+            var arrayPessoas = new List<PessoaResponseDb>(); //criando o array
+            var date = DateOnly.FromDateTime(DateTime.Now); //data de hoje
+            var listaPessoas = await _context.pessoas.ToListAsync(); //select na base de pessoas
             foreach (var pessoa in listaPessoas)
             {
 

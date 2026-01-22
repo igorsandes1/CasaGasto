@@ -13,13 +13,14 @@ function CategoriasComponent() {
   const [search, setSearch] = useState('') //valor da barra de pesquisa de categoria
   const [modalCreateCategory, setModalCreateCategory] = useState(false) //ativa/desativa modal de criacao de categorias
 
-  const [description, setDescription] = useState('')
-  const [target, setTarget] = useState('')
-  const [categorias, setCategorias] = useState([])
+  const [description, setDescription] = useState('') //descricao da categoria digitado pelo usuario
+  const [target, setTarget] = useState('') //finalidade da categoria digitado pelo usuario
+  const [categorias, setCategorias] = useState([]) //todas as categorias
 
-  const [errorDescription, setErrorDescription] = useState('')
-  const [errorTarget, setErrorTarget] = useState('')
+  const [errorDescription, setErrorDescription] = useState('') //caso ocorra algum erro na descricao da categoria
+  const [errorTarget, setErrorTarget] = useState('') //caso ocorra algum erro na finalidade da categoria
 
+  //funcao para busca de finalidade
   const loadCategorias = async () => {
 
   fetch(`https://localhost:7223/api/categorias?finalidade=Ambas`, {
@@ -47,24 +48,27 @@ function CategoriasComponent() {
 
   useEffect(() => {
 
-    loadCategorias()
+    loadCategorias() //rodando a funcao de get de categorias
 
   }, [])
 
+  //criacao de categoria
   function createCategory(): boolean {
 
-  setErrorDescription('')
+  //resetando erros.
+  setErrorDescription('') 
   setErrorTarget('')
+
 
   if(target == 'default' || !description) {
 
-  if(target == 'default') {
+  if(target == 'default') { //caso finalidade seja valor default (sem valor)
 
   setErrorTarget("O campo finalidade é obrigatório")
 
   }
 
-  if(!description) {
+  if(!description) { //caso a descricao venha vazia
 
   setErrorDescription("O campo descrição é obrigatório")
 
@@ -74,6 +78,7 @@ function CategoriasComponent() {
 
   }
 
+  //solicitacao de criacao de categoria endpoint
   fetch(`https://localhost:7223/api/categorias/create`, {
     method: "POST",
     headers: {
@@ -90,8 +95,8 @@ function CategoriasComponent() {
 
   }
 
-  loadCategorias()
-  setModalCreateCategory(false)
+  loadCategorias() //rodando o endpoint de get das categorias
+  setModalCreateCategory(false) //desabilitando o modal de criacao de categoria
 
   })
 

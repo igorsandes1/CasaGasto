@@ -116,7 +116,6 @@ function CategoriasComponent() {
 
   return (
   <>
-  
     <NavbarComponent />
     <main>
     <h1>Gerenciar Categorias</h1>
@@ -141,7 +140,7 @@ function CategoriasComponent() {
     .filter((categorias: Categorias) => categorias.description.toLowerCase().includes(search.toLowerCase()) || categorias.id.includes(search.toLowerCase()))
     .map((categoria: Categorias) => (
     <div key={categoria.id} className={styles.itemCategory}>
-    <div> <span>#{categoria.id}</span> <p>{categoria.description}</p> <p>{categoria.target}</p></div>
+    <div> <span>#{categoria.id}</span> <p>{categoria.description.length < 20 ? categoria.description : categoria.description.substring(0,20)+"..."}</p> <p>{categoria.target}</p></div>
     </div>
     ))
 
@@ -155,7 +154,7 @@ function CategoriasComponent() {
 
     modalCreateCategory &&
     <ModalComponent onClose={() => setModalCreateCategory(false)}>
-    <InputComponent label='Descrição' error={errorDescription} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+    <InputComponent label='Descrição' maxLength={100} error={errorDescription} onChange={(e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
       setDescription(value)
       description != '' && setErrorDescription('')

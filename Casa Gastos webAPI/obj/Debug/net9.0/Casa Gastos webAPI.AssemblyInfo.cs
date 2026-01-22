@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Casa Gastos webAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f9e6fb145c68eed69fe1506be1fb06ad1f8aca8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15fc37e8cc7f5d383ed5acb4d00e1bef10153698")]
 [assembly: System.Reflection.AssemblyProductAttribute("Casa Gastos webAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Casa Gastos webAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -25,8 +25,46 @@ namespace Casa_Gastos_webAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get() 
         {
+            var arrayPessoas = new List<PessoaResponseDb>();
+            var date = DateOnly.FromDateTime(DateTime.Now);
             var listaPessoas = await _context.pessoas.ToListAsync();
-            return Ok(listaPessoas);
+            foreach (var pessoa in listaPessoas)
+            {
+
+            //calculo da idade da pessoa
+
+            int idade = date.Year - pessoa.DateBirth.Year; //check ano
+
+                if(date.Month < pessoa.DateBirth.Month) { //check mes
+
+                    idade--;
+
+                }
+
+                if(date.Month == pessoa.DateBirth.Month) //se for o mesmo mes, irá verificar pelo dia.
+                {
+
+                    if(date.Day < pessoa.DateBirth.Day)
+                    {
+                        idade--;
+                    }
+
+                }
+
+                //obj para colocar no array
+                arrayPessoas.Add(new PessoaResponseDb
+                {
+                    Id = pessoa.Id,
+                    Created_At = pessoa.Created_At,
+                    DateBirth = pessoa.DateBirth,
+                    Name = pessoa.Name,
+                    YearsOld = idade
+                });
+
+            }
+
+
+            return Ok(arrayPessoas); //status 200
         }
 
         //POST api/pessoas/create (Criacao de um novo usuário)

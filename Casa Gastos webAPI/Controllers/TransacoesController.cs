@@ -24,13 +24,13 @@ namespace Casa_Gastos_webAPI.Controllers
         public async Task<IActionResult> Get() 
         {
 
-        var resultadoListaTransacoes = new List<GetTransacoes>();
-        var listaTransacoes = await _context.transacoes.ToListAsync();
+        var resultadoListaTransacoes = new List<GetTransacoes>(); //cria o array das transacoes
+        var listaTransacoes = await _context.transacoes.ToListAsync(); //busca todas as transacoes no banco de dados
 
         foreach(var transacoes in listaTransacoes) {
 
-        var categorias = await _context.categorias.FindAsync(transacoes.Category);
-        var pessoas = await _context.pessoas.FindAsync(transacoes.Owner);
+        var categorias = await _context.categorias.FindAsync(transacoes.Category); //está buscando no banco de categorias, categorias que contenham transacoes.Category
+                var pessoas = await _context.pessoas.FindAsync(transacoes.Owner); //está buscando no banco de pessoas, pessoas que contenham transacoes.Owner
 
                 var itemArray = new GetTransacoes
                 {
@@ -44,7 +44,7 @@ namespace Casa_Gastos_webAPI.Controllers
                     Created_At = transacoes.Created_At
                 };
 
-                resultadoListaTransacoes.Add(itemArray);
+                resultadoListaTransacoes.Add(itemArray); //adiciona objeto ao array
 
         }
 

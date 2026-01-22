@@ -6,12 +6,16 @@ import Alarm from '../../imgs/Alarm.svg'
 import ButtonComponent from '../../Components/Button'
 import type { Transacoes } from '../../../interfaces/Transacoes'
 import { useEffect, useState, type ChangeEvent } from 'react'
+import type { Pessoa } from '../../../interfaces/Pessoas'
+import type { Select } from '../../../interfaces/Select'
+import type { Categorias } from '../../../interfaces/Categorias'
 
 function TransacoesComponent() {
 
-  const [pessoasDados, setPessoasDados] = useState([]);
+  const [targetSelected, setTargetSelected] = useState<Select[]>([])
+  const [pessoasDados, setPessoasDados] = useState<Pessoa[]>([]);
   const [transacoesDados, setTransacoesDados] = useState([]);
-  const [categoriasDados, setCategoriasDados] = useState([])
+  const [categoriasDados, setCategoriasDados] = useState<Categorias[]>([])
 
   const [description, setDescription] = useState('')
   const [value, setValue] = useState(0)
@@ -178,16 +182,35 @@ function TransacoesComponent() {
 
   }, [])
 
-  let targetSelected = [
+  useEffect(() => {
+  
+  let personSelected = pessoasDados.find((b: Pessoa) => b.id == personName) 
+  
+  if(personSelected && personSelected.yearsOld < 18) {
+
+  setTargetSelected([
     {
       id: 'Despesa',
       name: 'Despesa'
     },
-    {
-      id: 'Receita',
-      name: 'Receita'
-    }
-  ]
+])
+
+  } else {
+
+  setTargetSelected([
+  {
+    id: 'Despesa',
+    name: 'Despesa' 
+  },
+  { 
+    id: 'Receita',
+    name: 'Receita'
+   }
+  ])
+
+  }
+
+  }, [personName])
 
   return (
   <>
@@ -208,18 +231,29 @@ function TransacoesComponent() {
   setValue(Number(value))
   value > 0 && setErrorValue('')  
   }}/>
-  <SelectComponent label='Pessoa' optionsArray={pessoasDados}error={errorPersonName} onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+  <SelectComponent label='Pessoa' optionsArray={pessoasDados.map((b) => {
+    return {
+    id: b.id,
+    name: b.name.length < 30 ? b.name : b.name.substring(0,30)+"..."
+    }
+  })}error={errorPersonName} onChange={(e: ChangeEvent<HTMLSelectElement>) => {
   const value = e.target.value
   setPersonName(value)
+
   value != 'default' && setErrorPersonName('')
   }}/>
-  <SelectComponent label='Finalidade' optionsArray={targetSelected} error={errorTarget} onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+  <SelectComponent label='Finalidade (selecione uma pessoa)' optionsArray={targetSelected} error={errorTarget} disabled={personName == 'default'} onChange={(e: ChangeEvent<HTMLSelectElement>) => {
   const value = e.target.value
   setTarget(value)
   loadCategorias(value)
   value != 'default' && setErrorTarget('')
   }}/>
-  <SelectComponent label='Categoria (selecione uma finalidade)' optionsArray={categoriasDados} identificador='description' disabled={target == 'default'} error={errorCategory} onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+  <SelectComponent label='Categoria (selecione uma finalidade)' optionsArray={categoriasDados.map((b) => {
+    return {
+      id: b.id,
+      name: b.description.length < 30 ? b.description : b.description.substring(0,30)+"..."
+    }
+  })} disabled={target == 'default'} error={errorCategory} onChange={(e: ChangeEvent<HTMLSelectElement>) => {
   const value = e.target.value
   setCategory(value)
   value != 'default' && setErrorCategory('')
@@ -239,8 +273,8 @@ function TransacoesComponent() {
     transacoesDados && transacoesDados.map((transaction: Transacoes) => (
     <div className={styles.containerItemListTransactions} key={transaction.id}>
     <h3>{transaction.target}</h3>
-    <p><span>Categoria:</span> {transaction.category}</p>
-    <p><span>Pessoa:</span> {transaction.owner}</p>
+    <p><span>Categoria:</span> {transaction.category.length < 30 ? transaction.category : transaction.category.substring(0,30)+'...'}</p>
+    <p><span>Pessoa:</span> {transaction.owner.length < 30 ? transaction.owner : transaction.owner.substring(0,30)+'...'}</p>
     <p><span>Valor:</span> R$ {transaction.value.toLocaleString('pt-BR')}</p>
     <p><span>Id:</span> #{transaction.id}</p>
     <p title={transaction.description}><span>Descrição</span>: {transaction.description.length > 40 ? transaction.description+'...' : transaction.description}</p>

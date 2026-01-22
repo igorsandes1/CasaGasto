@@ -13,8 +13,6 @@ const date = new Date()
 const todayFormatted = date.getFullYear()+'-'+date.getMonth()+1+"-"+date.getDate() // pega a data de hoje para limitar no type date
 
 const [search, setSearch] = useState('') //é o valor/edicao do campo de busca
-const [modalEditPerson, setModalEditPerson] = useState(false) //ativa/desativa modal de edicao de pessoas
-const [personSelectedEdit, setPersonSelectedEdit] = useState<Pessoa | null>(null) //e o array da pessoa que foi selecionada para a edicao
 const [modalCreatePerson, setModalCreatePerson] = useState(false) //ativa/desativa modal de criacao de pessoas
 const [personName, setPersonName] = useState('') //nome da pessoa inserido pelo usuario no modal de criacao de pessoas
 const [dateBirthday, setDateBirthday] = useState('') //data de aniversario inserida pelo usuario no modal de criacao de pessoas
@@ -73,14 +71,6 @@ const [pessoas, setPessoas] = useState([])
   loadPessoas()
 
   })
-
-  return true
-
-  }
-
-  function editPerson(): boolean {
-
-  
 
   return true
 
@@ -147,44 +137,6 @@ const [pessoas, setPessoas] = useState([])
   return true
 
   }
-
-  //calc para trazer o valor inteiro de idade da pessoa
-
-  function calcYearsOld(dateBirth: string): number {
-
-  let dateToday = new Date()
-  let dateBirthString = new Date(dateBirth)
-
-  let year = dateToday.getFullYear()
-  let month = dateToday.getMonth() + 1
-  let day = dateToday.getDate()
-  let yearUser = dateBirthString.getFullYear()
-  let monthUser = dateBirthString.getMonth() + 1
-  let dayUser = dateBirthString.getDate()
-  
-let yearsOld = year - yearUser
-
-if(month < monthUser) {
-
-yearsOld = yearsOld - 1
-
-}
-
-if(month == monthUser) {
-
-if(day < dayUser) {
-
-yearsOld = yearsOld - 1
-
-}
-
-}
-
-  return yearsOld
-
-  }
-
-
   
   return (
 
@@ -214,17 +166,13 @@ yearsOld = yearsOld - 1
     
    <div key={pessoa.id} className={styles.containerUser}>
    <div className={styles.containerUserInfo}>
-    <h3>{pessoa.name}</h3>
+    <h3>{pessoa.name.length < 35 ? pessoa.name : pessoa.name.substring(0,35)+"..."}</h3>
     <span>
     ID: #{pessoa.id} <br />
-    IDADE: {calcYearsOld(pessoa.dateBirth)} anos
+    IDADE: {pessoa.yearsOld} anos
     </span>
    </div>
    <div className={styles.containerButtons}>
-   <ButtonComponent label='Editar' onClick={() => {
-    setModalEditPerson(true)
-    setPersonSelectedEdit(pessoa)
-   }}/>
    <ButtonComponent label='Excluir' color='rgb(151, 21, 21)' onClick={() => deletePerson(pessoa)}/>
    </div>
    </div>
@@ -243,21 +191,9 @@ yearsOld = yearsOld - 1
    modalCreatePerson && 
   <ModalComponent onClose={() => setModalCreatePerson(false)}>
   <h2>Criar nova pessoa</h2>
-  <InputComponent label='Nome' error={errorPersonName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonName(e.target.value)}/>
+  <InputComponent label='Nome' maxLength={100} error={errorPersonName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonName(e.target.value)}/>
   <InputComponent type='date' label='Data de nascimento' min='1900-01-01' max={todayFormatted && todayFormatted} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateBirthday(e.target.value)} error={errorBirthday}/>
   <ButtonComponent label='Criar pessoa' onClick={() => createNewPerson()}/>
-  </ModalComponent>
-  }
-  {
-  
-  //caso o modalEditPerson for true, abre o modal para editar pessoa selecionada (a pessoa vem do obj personSelectedEdit)
-
-  modalEditPerson && personSelectedEdit &&
-  <ModalComponent onClose={() => setModalEditPerson(false)}>
-  <h2>Edição de pessoa</h2>
-  <InputComponent label='Nome' value={personSelectedEdit.name} error={errorPersonName}/>
-  <InputComponent type='date' label='Data de nascimento' value={personSelectedEdit.dateBirth} min='1900-01-01' max={todayFormatted && todayFormatted} error={errorBirthday} disabled/>
-  <ButtonComponent label='Editar pessoa' />
   </ModalComponent>
   }
 
